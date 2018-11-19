@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WebSocket</string>
+    <string name="use_store_bitcoin">Use and store you\nBitcoins more\nsecurely</string>
+    <string name="bitoasis_feature">BitOasis multisig wallet secures\nyour bitcoins with 3 multisig\ndistributed key storage.</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
 </resources>
