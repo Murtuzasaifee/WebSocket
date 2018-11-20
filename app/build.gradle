@@ -28,6 +28,7 @@ dependencies {
     //OK Http lib
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     /* Dependencies for Lombok. Automatic generation of getters, setters and constructors*/
+    implementation 'com.android.support:support-v4:28.0.0'
     compileOnly "org.projectlombok:lombok:1.16.20"
     annotationProcessor 'org.projectlombok:lombok:1.16.20'
 

@@ -1,4 +1,4 @@
-package com.bitoasis.websocket.Utils;
+package com.bitoasis.websocket.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
