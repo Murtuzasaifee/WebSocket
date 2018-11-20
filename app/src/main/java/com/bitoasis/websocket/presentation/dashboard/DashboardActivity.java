@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bitoasis.websocket.R;
+import com.bitoasis.websocket.inits.BaseFragment;
 import com.bitoasis.websocket.utils.ConnectionUtils;
 import com.bitoasis.websocket.inits.BaseActivity;
 import com.bitoasis.websocket.sockets.CustomWebSocketListener;
@@ -31,6 +33,7 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
     private OkHttpClient client;
     private TextInputLayout inputTIL;
     private WeakReference<DashboardActivity> dashboardActivityWR;
+    private BaseFragment selectedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,9 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
         setContentView(R.layout.activity_dashboard);
         dashboardActivityWR = new WeakReference<>(this);
         initFields();
-        navigateToFragments(false, new TradeHighlightFragment(), TradeHighlightFragment.TAG);
+        TradeHighlightFragment tradeHighlightFragment = new TradeHighlightFragment();
+        navigateToFragments(false,tradeHighlightFragment, TradeHighlightFragment.TAG);
+        selectedFragment = tradeHighlightFragment;
     }
 
     /**
@@ -91,11 +96,15 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
             switch (item.getItemId()) {
                 case R.id.tradeHighlight:
                     updateScreenTitle(getString(R.string.tradeHighlight));
-                    navigateToFragments(true, new TradeHighlightFragment(), TradeHighlightFragment.TAG);
+                    TradeHighlightFragment tradeHighlightFragment = new TradeHighlightFragment();
+                    selectedFragment = tradeHighlightFragment;
+                    navigateToFragments(false,tradeHighlightFragment , TradeHighlightFragment.TAG);
                     return true;
                 case R.id.tradeSummary:
                     updateScreenTitle(getString(R.string.tradeSummary));
-                    navigateToFragments(true, new TradeSummaryFragment(), TradeSummaryFragment.TAG);
+                    TradeSummaryFragment tradeSummaryFragment = new TradeSummaryFragment();
+                    selectedFragment = tradeSummaryFragment;
+                    navigateToFragments(false,tradeSummaryFragment , TradeSummaryFragment.TAG);
                     return true;
 
             }
@@ -144,6 +153,7 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
         try {
             JSONArray jsonArray = new JSONArray(data);
             Log.d("onMessage Parsed", jsonArray.toString());
+            selectedFragment.updateUI();
         } catch (JSONException e) {
             e.printStackTrace();
         }

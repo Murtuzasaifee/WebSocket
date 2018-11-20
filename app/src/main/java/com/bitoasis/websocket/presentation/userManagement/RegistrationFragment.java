@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.bitoasis.websocket.R;
 import com.bitoasis.websocket.inits.BaseActivity;
+import com.bitoasis.websocket.inits.BaseFragment;
 import com.bitoasis.websocket.presentation.dashboard.DashboardActivity;
 
 import java.lang.ref.WeakReference;
@@ -18,7 +19,7 @@ import java.lang.ref.WeakReference;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RegistrationFragment extends Fragment {
+public class RegistrationFragment extends BaseFragment {
 
     public static final String TAG = RegistrationFragment.class.getName();
     private WeakReference<BaseActivity> activityWR;
@@ -53,7 +54,7 @@ public class RegistrationFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.closeBtn:
-                    activityWR.get().getSupportFragmentManager().popBackStack();
+                    closeFragment(activityWR.get());
                     break;
 
                 case R.id.loginBtn:

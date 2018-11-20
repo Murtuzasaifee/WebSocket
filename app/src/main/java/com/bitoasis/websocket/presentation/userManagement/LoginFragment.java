@@ -10,11 +10,12 @@ import android.view.ViewGroup;
 
 import com.bitoasis.websocket.R;
 import com.bitoasis.websocket.inits.BaseActivity;
+import com.bitoasis.websocket.inits.BaseFragment;
 import com.bitoasis.websocket.presentation.dashboard.DashboardActivity;
 
 import java.lang.ref.WeakReference;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends BaseFragment {
 
     public static final String TAG = LoginFragment.class.getName();
     private WeakReference<BaseActivity> activityWR;
@@ -46,9 +47,9 @@ public class LoginFragment extends Fragment {
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.closeBtn:
-                    activityWR.get().getSupportFragmentManager().popBackStack();
+                    closeFragment(activityWR.get());
                     break;
 
                 case R.id.loginBtn:
