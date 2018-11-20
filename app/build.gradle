@@ -27,6 +27,9 @@ dependencies {
     implementation "com.android.support:design:${rootProject.ext.supportLibVersion}"
     //OK Http lib
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    /* Dependencies for Lombok. Automatic generation of getters, setters and constructors*/
+    compileOnly "org.projectlombok:lombok:1.16.20"
+    annotationProcessor 'org.projectlombok:lombok:1.16.20'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

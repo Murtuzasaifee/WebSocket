@@ -2,6 +2,9 @@ package com.bitoasis.websocket.sockets;
 
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
@@ -10,7 +13,11 @@ import okio.ByteString;
 
 public class CustomWebSocketListener extends WebSocketListener {
     private static final int CLOSURE_STATUS = 1000;
+    private SocketDataListener socketDataListener;
 
+    public CustomWebSocketListener(SocketDataListener socketDataListener){
+        this.socketDataListener = socketDataListener;
+    }
 
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
@@ -26,7 +33,7 @@ public class CustomWebSocketListener extends WebSocketListener {
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {
-        Log.d("onMessage", "=====" + text +"=====");
+        socketDataListener.onMessageReceived(text);
     }
 
     @Override
