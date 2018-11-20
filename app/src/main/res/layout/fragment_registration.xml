@@ -16,7 +16,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+       android:layout_below="@id/closeBtn"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="35dp"
         android:orientation="vertical"
         android:layout_marginStart="35dp"
@@ -63,7 +64,7 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email"
+                android:hint="@string/yourEmail"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLines="1" />
@@ -79,27 +80,12 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/password"
+                android:hint="@string/choosePassed"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/confirmPasswdTIL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:theme="@style/InputFields">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/confirmPasswd"
-                android:imeOptions="actionNext"
-                android:inputType="textPassword"
-                android:maxLines="1" />
-        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/registerBtn"
@@ -112,6 +98,14 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/tnc"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/colorAccent" />
 
 
     </LinearLayout>

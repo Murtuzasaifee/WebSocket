@@ -11,7 +11,8 @@
     <string name="password">Password</string>
     <string name="forgotPasswd">Forgot your password?</string>
     <string name="tnc"><u>Terms of service</u> and <u>Privacy policy</u></string>
-    <string name="firstName">First Name</string>
-    <string name="lastName">Last Name</string>
-    <string name="confirmPasswd">Confirm Password</string>
+    <string name="firstName">Your Name</string>
+    <string name="lastName">Your Surname</string>
+    <string name="yourEmail">Your email</string>
+    <string name="choosePassed">Choose a Password</string>
 </resources>
