@@ -11,8 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TradeModel {
 
-    private String channelId;
-    private String currencyId;
+    private int channelId;
+    private int currencyId;
     private String lastTradePrice;
     private String lowestAsk;
     private String highestBid;
@@ -21,6 +21,6 @@ public class TradeModel {
     private String qouteCurrency;
     private String highestTradePrice;
     private String lowestTradePrice;
-    private boolean isFrozen;
+    private int isFrozen;
 
 }

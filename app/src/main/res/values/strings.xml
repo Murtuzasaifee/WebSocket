@@ -21,4 +21,10 @@
     <string name="plzConnectToNetwork">Please check your internet connection.</string>
     <string name="tradeHighlight">Trade Highlight</string>
     <string name="tradeSummary">Trade Summary</string>
+    <string name="currency">Currency</string>
+    <string name="lastTradePrice">Last Trade Price</string>
+    <string name="lowestAsk">LowestAsk</string>
+    <string name="highestBid">Highest Bid</string>
+    <string name="frozen">Frozen</string>
+    <string name="invalidChannel">Invalid Channel</string>
 </resources>

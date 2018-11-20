@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".presentation.dashboard.TradeHighlightFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Trade Highlight" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <include
+            android:id="@+id/btc"
+            layout="@layout/currency_item" />
+
+        <include
+            android:id="@+id/eth"
+            layout="@layout/currency_item" />
+
+        <include
+            android:id="@+id/xrp"
+            layout="@layout/currency_item" />
+
+    </LinearLayout>
+
+</ScrollView>

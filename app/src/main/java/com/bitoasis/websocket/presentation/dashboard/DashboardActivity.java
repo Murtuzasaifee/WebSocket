@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bitoasis.websocket.R;
+import com.bitoasis.websocket.datamodels.TradeModel;
 import com.bitoasis.websocket.inits.BaseFragment;
 import com.bitoasis.websocket.utils.ConnectionUtils;
 import com.bitoasis.websocket.inits.BaseActivity;
@@ -22,6 +24,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -42,23 +46,23 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
         dashboardActivityWR = new WeakReference<>(this);
         initFields();
         TradeHighlightFragment tradeHighlightFragment = new TradeHighlightFragment();
-        navigateToFragments(false,tradeHighlightFragment, TradeHighlightFragment.TAG);
+        navigateToFragments(false, tradeHighlightFragment, TradeHighlightFragment.TAG);
         selectedFragment = tradeHighlightFragment;
     }
 
     /**
      * Initialize UI Fields
-     * */
+     */
     private void initFields() {
         updateScreenTitle(getString(R.string.tradeHighlight));
         inputTIL = findViewById(R.id.inputTIL);
         findViewById(R.id.fetchDetailsBtn).setOnClickListener(clickListener);
-        ((BottomNavigationView)findViewById(R.id.bottomBar)).setOnNavigationItemSelectedListener(navigationListener);
+        ((BottomNavigationView) findViewById(R.id.bottomBar)).setOnNavigationItemSelectedListener(navigationListener);
     }
 
     /**
      * Start Web Socket Connection
-     * */
+     */
     private void startSocketConnection() {
         client = new OkHttpClient();
         Request request = new Request.Builder().url("wss://api2.poloniex.com").build();
@@ -69,7 +73,7 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
 
     /**
      * View Click listener
-     * */
+     */
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -87,7 +91,7 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
 
     /**
      * Bottom navigation bar click listener
-     * */
+     */
     private BottomNavigationView.OnNavigationItemSelectedListener navigationListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -98,13 +102,13 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
                     updateScreenTitle(getString(R.string.tradeHighlight));
                     TradeHighlightFragment tradeHighlightFragment = new TradeHighlightFragment();
                     selectedFragment = tradeHighlightFragment;
-                    navigateToFragments(false,tradeHighlightFragment , TradeHighlightFragment.TAG);
+                    navigateToFragments(false, tradeHighlightFragment, TradeHighlightFragment.TAG);
                     return true;
                 case R.id.tradeSummary:
                     updateScreenTitle(getString(R.string.tradeSummary));
                     TradeSummaryFragment tradeSummaryFragment = new TradeSummaryFragment();
                     selectedFragment = tradeSummaryFragment;
-                    navigateToFragments(false,tradeSummaryFragment , TradeSummaryFragment.TAG);
+                    navigateToFragments(false, tradeSummaryFragment, TradeSummaryFragment.TAG);
                     return true;
 
             }
@@ -115,15 +119,15 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
     /**
      * Update Screen title
      * based on the user selection
-     * */
-    private void updateScreenTitle(String title){
-        ((TextView)findViewById(R.id.screenTitle)).setText(title);
+     */
+    private void updateScreenTitle(String title) {
+        ((TextView) findViewById(R.id.screenTitle)).setText(title);
     }
 
     /**
      * Validate user input
      * before making connection
-     * */
+     */
     private boolean validInput() {
         String input = inputTIL.getEditText().getText().toString().trim();
         if (input.isEmpty()) {
@@ -149,13 +153,40 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
     }
 
     @Override
-    public void onMessageReceived(String data) {
+    public void onMessageReceived(final String data) {
+        Log.d("onMessageReceived", data);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                selectedFragment.updateUI(getTradeModel(data));
+            }
+        });
+
+    }
+
+    private TradeModel getTradeModel(String data) {
+        TradeModel tradeModel = new TradeModel();
         try {
-            JSONArray jsonArray = new JSONArray(data);
-            Log.d("onMessage Parsed", jsonArray.toString());
-            selectedFragment.updateUI();
-        } catch (JSONException e) {
+            String stringSplit = data.replace("[", "");
+            stringSplit = stringSplit.replace("]", "");
+            stringSplit = stringSplit.replace("\"", "");
+
+            List<String> splitStr = Arrays.asList(stringSplit.split(","));
+            if (splitStr.size() > 10) {
+                tradeModel.setCurrencyId(Integer.parseInt(splitStr.get(2)));
+                tradeModel.setLastTradePrice(splitStr.get(3));
+                tradeModel.setLowestAsk(splitStr.get(4));
+                tradeModel.setHighestBid(splitStr.get(5));
+                tradeModel.setPertChange(splitStr.get(6));
+                tradeModel.setBaseCurrency(splitStr.get(7));
+                tradeModel.setQouteCurrency(splitStr.get(8));
+                tradeModel.setIsFrozen(Integer.parseInt(splitStr.get(9)));
+                tradeModel.setHighestTradePrice(splitStr.get(10));
+                tradeModel.setLowestTradePrice(splitStr.get(11));
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return tradeModel;
     }
 }

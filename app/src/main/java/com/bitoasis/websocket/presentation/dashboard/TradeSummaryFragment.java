@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bitoasis.websocket.R;
+import com.bitoasis.websocket.datamodels.TradeModel;
 import com.bitoasis.websocket.inits.BaseFragment;
 
 /**
@@ -31,8 +32,8 @@ public class TradeSummaryFragment extends BaseFragment {
     }
 
     @Override
-    public void updateUI() {
-        super.updateUI();
+    public void updateUI(TradeModel tradeModel) {
+        super.updateUI(tradeModel);
         Log.e("=====" ,"Trade Summary");
     }
 
