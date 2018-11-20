@@ -59,4 +59,11 @@ public class LoginFragment extends Fragment {
             }
         }
     };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        clickListener = null;
+        activityWR = null;
+    }
 }
