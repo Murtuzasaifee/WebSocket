@@ -53,11 +53,13 @@ public class TradeHighlightFragment extends BaseFragment {
             btc.setVisibility(View.VISIBLE);
             ((TextView) btc.findViewById(R.id.currencyTV)).setText("BTC_EOS");
             updateView(btc, tradeModel);
-        } else if (tradeModel.getCurrencyId() == 172) {
+        }
+        else if (tradeModel.getCurrencyId() == 172) {
             eth.setVisibility(View.VISIBLE);
             ((TextView) eth.findViewById(R.id.currencyTV)).setText("ETH_ETC");
             updateView(eth, tradeModel);
-        } else if (tradeModel.getCurrencyId() == 171) {
+        }
+        else if (tradeModel.getCurrencyId() == 171) {
             xrp.setVisibility(View.VISIBLE);
             ((TextView) xrp.findViewById(R.id.currencyTV)).setText("BTC_ETC");
             updateView(xrp, tradeModel);
@@ -66,6 +68,7 @@ public class TradeHighlightFragment extends BaseFragment {
     }
 
     private void updateView(View v, TradeModel tradeModel) {
+        parentView.findViewById(R.id.dataSyncTV).setVisibility(View.GONE);
         ((TextView) v.findViewById(R.id.lastTradePriceTV)).setText(tradeModel.getLastTradePrice());
         ((TextView) v.findViewById(R.id.lowestAskTV)).setText(tradeModel.getLowestAsk());
         ((TextView) v.findViewById(R.id.highestBidTV)).setText(tradeModel.getHighestBid());

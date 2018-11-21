@@ -55,6 +55,18 @@
 
         </TableRow>
 
+        <TextView
+            android:id="@+id/dataSyncTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dataSync"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceSmall"  />
+
         <include
             android:id="@+id/cr1"
             layout="@layout/table_row"

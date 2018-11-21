@@ -55,23 +55,28 @@ public class TradeSummaryFragment extends BaseFragment {
             cr1.setVisibility(View.VISIBLE);
             ((TextView) cr1.findViewById(R.id.currencyTV)).setText("BTC_EOS");
             updateView(cr1, tradeModel);
-        } else if (tradeModel.getCurrencyId() == 172) {
+        }
+        else if (tradeModel.getCurrencyId() == 172) {
             cr2.setVisibility(View.VISIBLE);
             ((TextView) cr2.findViewById(R.id.currencyTV)).setText("ETH_ETC");
             updateView(cr2, tradeModel);
-        } else if (tradeModel.getCurrencyId() == 171) {
+        }
+        else if (tradeModel.getCurrencyId() == 171) {
             cr3.setVisibility(View.VISIBLE);
             ((TextView) cr3.findViewById(R.id.currencyTV)).setText("BTC_ETC");
             updateView(cr3, tradeModel);
-        }else if (tradeModel.getCurrencyId() == 114) {
+        }
+        else if (tradeModel.getCurrencyId() == 114) {
             cr4.setVisibility(View.VISIBLE);
             ((TextView) cr4.findViewById(R.id.currencyTV)).setText("BTC_XMR");
             updateView(cr4, tradeModel);
-        }else if (tradeModel.getCurrencyId() == 50) {
+        }
+        else if (tradeModel.getCurrencyId() == 50) {
             cr5.setVisibility(View.VISIBLE);
             ((TextView) cr5.findViewById(R.id.currencyTV)).setText("BTC_LTC");
             updateView(cr5, tradeModel);
-        }else if (tradeModel.getCurrencyId() == 218) {
+        }
+        else if (tradeModel.getCurrencyId() == 218) {
             cr6.setVisibility(View.VISIBLE);
             ((TextView) cr6.findViewById(R.id.currencyTV)).setText("USDT_LSK");
             updateView(cr6, tradeModel);
@@ -80,6 +85,7 @@ public class TradeSummaryFragment extends BaseFragment {
     }
 
     private void updateView(View v, TradeModel tradeModel) {
+        parentView.findViewById(R.id.dataSyncTV).setVisibility(View.GONE);
         ((TextView) v.findViewById(R.id.lastTradePriceTV)).setText(tradeModel.getLastTradePrice());
         ((TextView) v.findViewById(R.id.lowestAskTV)).setText(tradeModel.getLowestAsk());
     }

@@ -27,4 +27,5 @@
     <string name="highestBid">Highest Bid</string>
     <string name="frozen">Frozen</string>
     <string name="invalidChannel">Invalid Channel</string>
+    <string name="dataSync">Syncing data please wait...</string>
 </resources>
