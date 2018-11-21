@@ -1,11 +1,46 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="InputFields">
+        <item name="android:editTextColor">@color/colorAccent</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textSize">16sp</item>
+
+        <!-- Color of floating label of textinputlayout has no focus & when data id filled -->
+        <item name="android:textColorHint">@color/colorAccent</item>
+
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Color of bottom line when textinputlayout has no focus -->
+        <item name="colorControlNormal">@color/colorAccent</item>
+
+        <!-- Color of bottom line and floating label when textinputlayout has focus -->
+        <item name="colorControlActivated">@color/colorAccent</item>
+
+        <item name="hintTextAppearance">@style/AppTheme.HintTextAppearance</item>
+
+        <item name="errorTextAppearance">@style/AppTheme.ErrorTextAppearance</item>
+
+    </style>
+
+    <style name="AppTheme.ErrorTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/redColor</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="AppTheme.HintTextAppearance" parent="@android:style/TextAppearance">
+        <!-- Error message appearance here -->
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
 </resources>
