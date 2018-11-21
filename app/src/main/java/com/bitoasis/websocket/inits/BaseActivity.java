@@ -21,7 +21,7 @@ public class BaseActivity extends AppCompatActivity {
                     .commitAllowingStateLoss();
         } else {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.contentView, fragment, tag)
+                    .replace(R.id.contentView, fragment, tag)
                     .commitAllowingStateLoss();
         }
     }

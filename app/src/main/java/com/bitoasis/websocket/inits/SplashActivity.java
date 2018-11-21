@@ -55,4 +55,14 @@ public class SplashActivity extends AppCompatActivity {
         userManagementIntent.putExtra(UserManagementActivity.FRAGMENT_ID, ordinal);
         startActivity(userManagementIntent);
     }
+
+    /**
+     * Release references for GC
+     * */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clickListener = null;
+        splashActivityWR = null;
+    }
 }

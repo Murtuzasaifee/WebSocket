@@ -15,4 +15,17 @@
     <string name="lastName">Your Surname</string>
     <string name="yourEmail">Your email</string>
     <string name="choosePassed">Choose a Password</string>
+    <string name="inputNumber">Enter Number</string>
+    <string name="getDetails">Get Details</string>
+    <string name="plzEnterInput">Please enter a number</string>
+    <string name="plzConnectToNetwork">Please check your internet connection.</string>
+    <string name="tradeHighlight">Trade Highlight</string>
+    <string name="tradeSummary">Trade Summary</string>
+    <string name="currency">Currency</string>
+    <string name="lastTradePrice">Last Trade Price</string>
+    <string name="lowestAsk">LowestAsk</string>
+    <string name="highestBid">Highest Bid</string>
+    <string name="frozen">Frozen</string>
+    <string name="invalidChannel">Invalid Channel</string>
+    <string name="dataSync">Syncing data please wait...</string>
 </resources>
