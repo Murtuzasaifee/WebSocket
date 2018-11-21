@@ -50,12 +50,15 @@ public class TradeHighlightFragment extends BaseFragment {
     public void updateUI(TradeModel tradeModel) {
         super.updateUI(tradeModel);
         if (tradeModel.getCurrencyId() == 201) {
+            btc.setVisibility(View.VISIBLE);
             ((TextView) btc.findViewById(R.id.currencyTV)).setText("BTC_EOS");
             updateView(btc, tradeModel);
         } else if (tradeModel.getCurrencyId() == 172) {
+            eth.setVisibility(View.VISIBLE);
             ((TextView) eth.findViewById(R.id.currencyTV)).setText("ETH_ETC");
             updateView(eth, tradeModel);
         } else if (tradeModel.getCurrencyId() == 171) {
+            xrp.setVisibility(View.VISIBLE);
             ((TextView) xrp.findViewById(R.id.currencyTV)).setText("BTC_ETC");
             updateView(xrp, tradeModel);
         }

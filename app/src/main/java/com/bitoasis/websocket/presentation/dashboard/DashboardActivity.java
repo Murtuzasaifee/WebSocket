@@ -174,10 +174,8 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
                 tradeModel.setIsFrozen(Integer.parseInt(splitStr.get(9)));
                 tradeModel.setHighestTradePrice(splitStr.get(10));
                 tradeModel.setLowestTradePrice(splitStr.get(11));
+                tradeModel.setGreater(getTradeMovementIndicator(tradeModel.getLastTradePrice()));
             }
-
-           tradeModel.setGreater(getTradeMovementIndicator(tradeModel.getLastTradePrice()));
-
         } catch (Exception e) {
             e.printStackTrace();
         }

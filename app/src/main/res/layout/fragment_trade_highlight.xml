@@ -12,16 +12,23 @@
         android:orientation="vertical">
 
         <include
+            android:id="@+id/xrp"
+            android:visibility="gone"
+            tools:visibility = "visible"
+            layout="@layout/currency_item" />
+
+        <include
             android:id="@+id/btc"
+            android:visibility="gone"
+            tools:visibility = "visible"
             layout="@layout/currency_item" />
 
         <include
             android:id="@+id/eth"
+            android:visibility="gone"
+            tools:visibility = "visible"
             layout="@layout/currency_item" />
 
-        <include
-            android:id="@+id/xrp"
-            layout="@layout/currency_item" />
 
     </LinearLayout>
 
