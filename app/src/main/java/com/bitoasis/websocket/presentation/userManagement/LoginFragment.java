@@ -3,6 +3,7 @@ package com.bitoasis.websocket.presentation.userManagement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.bitoasis.websocket.R;
 import com.bitoasis.websocket.inits.BaseActivity;
 import com.bitoasis.websocket.inits.BaseFragment;
 import com.bitoasis.websocket.presentation.dashboard.DashboardActivity;
+import com.bitoasis.websocket.utils.AppUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -20,6 +22,7 @@ public class LoginFragment extends BaseFragment {
     public static final String TAG = LoginFragment.class.getName();
     private WeakReference<BaseActivity> activityWR;
     private View parentView;
+    private TextInputLayout emailTIL, passwdTIL;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -39,9 +42,15 @@ public class LoginFragment extends BaseFragment {
             return parentView;
 
         parentView = inflater.inflate(R.layout.fragment_login, container, false);
+        initFields();
+        return parentView;
+    }
+
+    private void initFields() {
+        emailTIL = parentView.findViewById(R.id.emailTIL);
+        passwdTIL = parentView.findViewById(R.id.passwdTIL);
         parentView.findViewById(R.id.closeBtn).setOnClickListener(clickListener);
         parentView.findViewById(R.id.loginBtn).setOnClickListener(clickListener);
-        return parentView;
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -53,13 +62,47 @@ public class LoginFragment extends BaseFragment {
                     break;
 
                 case R.id.loginBtn:
-                    activityWR.get().finishAffinity();
-                    Intent dashboardIntent = new Intent(activityWR.get(), DashboardActivity.class);
-                    startActivity(dashboardIntent);
+                    if (isValidForm()){
+                        activityWR.get().finishAffinity();
+                        Intent dashboardIntent = new Intent(activityWR.get(), DashboardActivity.class);
+                        startActivity(dashboardIntent);
+                    }
                     break;
             }
         }
     };
+
+    private boolean isValidForm() {
+        boolean isFormValid = true;
+        resetForm();
+
+        String email = emailTIL.getEditText().getText().toString().trim();
+        String passwd = passwdTIL.getEditText().getText().toString().trim();
+
+        if (AppUtils.isInValidString(email)){
+            emailTIL.setError(getString(R.string.enterEmail));
+            isFormValid = false;
+        }
+
+        if (!AppUtils.isValidEmail(email)){
+            emailTIL.setError(getString(R.string.enterValidEmail));
+            isFormValid = false;
+        }
+
+        if (AppUtils.isInValidString(passwd)){
+            passwdTIL.setError(getString(R.string.enterPasswd));
+            isFormValid = false;
+        }
+
+        return isFormValid;
+    }
+
+    private void resetForm() {
+        emailTIL.setError("");
+        emailTIL.setErrorEnabled(false);
+        passwdTIL.setError("");
+        passwdTIL.setErrorEnabled(false);
+    }
 
     @Override
     public void onDestroy() {

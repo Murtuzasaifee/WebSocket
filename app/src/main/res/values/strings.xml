@@ -28,4 +28,9 @@
     <string name="frozen">Frozen</string>
     <string name="invalidChannel">Invalid Channel</string>
     <string name="dataSync">Syncing data please wait...</string>
+    <string name="enterEmail">Enter Email</string>
+    <string name="enterValidEmail">Enter valid email</string>
+    <string name="enterPasswd">Enter Password</string>
+    <string name="enterFirstName">Enter First Name</string>
+    <string name="enterLastName">Enter Last Name</string>
 </resources>

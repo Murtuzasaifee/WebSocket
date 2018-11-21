@@ -27,8 +27,13 @@
 
         <item name="hintTextAppearance">@style/AppTheme.HintTextAppearance</item>
 
-        <item name="errorTextAppearance">@style/AppTheme.HintTextAppearance</item>
+        <item name="errorTextAppearance">@style/AppTheme.ErrorTextAppearance</item>
 
+    </style>
+
+    <style name="AppTheme.ErrorTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/redColor</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="AppTheme.HintTextAppearance" parent="@android:style/TextAppearance">

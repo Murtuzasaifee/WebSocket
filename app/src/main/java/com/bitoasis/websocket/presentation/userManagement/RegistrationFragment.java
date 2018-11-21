@@ -4,6 +4,7 @@ package com.bitoasis.websocket.presentation.userManagement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.bitoasis.websocket.R;
 import com.bitoasis.websocket.inits.BaseActivity;
 import com.bitoasis.websocket.inits.BaseFragment;
 import com.bitoasis.websocket.presentation.dashboard.DashboardActivity;
+import com.bitoasis.websocket.utils.AppUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -24,6 +26,7 @@ public class RegistrationFragment extends BaseFragment {
     public static final String TAG = RegistrationFragment.class.getName();
     private WeakReference<BaseActivity> activityWR;
     private View parentView;
+    private TextInputLayout firstNameTIL, lastNameTIL, emailTIL, passwdTIL;
 
     public RegistrationFragment() {
         // Required empty public constructor
@@ -44,9 +47,17 @@ public class RegistrationFragment extends BaseFragment {
             return parentView;
 
         parentView = inflater.inflate(R.layout.fragment_registration, container, false);
+        initFields();
+        return parentView;
+    }
+
+    private void initFields() {
+        firstNameTIL = parentView.findViewById(R.id.firstNameTIL);
+        lastNameTIL = parentView.findViewById(R.id.lastNameTIL);
+        emailTIL = parentView.findViewById(R.id.emailTIL);
+        passwdTIL = parentView.findViewById(R.id.passwdTIL);
         parentView.findViewById(R.id.closeBtn).setOnClickListener(clickListener);
         parentView.findViewById(R.id.registerBtn).setOnClickListener(clickListener);
-        return parentView;
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -57,14 +68,64 @@ public class RegistrationFragment extends BaseFragment {
                     closeFragment(activityWR.get());
                     break;
 
-                case R.id.loginBtn:
-                    activityWR.get().finishAffinity();
-                    Intent dashboardIntent = new Intent(activityWR.get(), DashboardActivity.class);
-                    startActivity(dashboardIntent);
+                case R.id.registerBtn:
+                    if (isValidForm()){
+                        activityWR.get().finishAffinity();
+                        Intent dashboardIntent = new Intent(activityWR.get(), DashboardActivity.class);
+                        startActivity(dashboardIntent);
+                    }
                     break;
             }
         }
     };
+
+    private boolean isValidForm() {
+        boolean isFormValid = true;
+        resetForm();
+
+        String firstName = firstNameTIL.getEditText().getText().toString().trim();
+        String lastName = lastNameTIL.getEditText().getText().toString().trim();
+        String email = emailTIL.getEditText().getText().toString().trim();
+        String passwd = passwdTIL.getEditText().getText().toString().trim();
+
+        if (AppUtils.isInValidString(firstName)){
+            firstNameTIL.setError(getString(R.string.enterFirstName));
+            isFormValid = false;
+        }
+
+        if (AppUtils.isInValidString(lastName)){
+            lastNameTIL.setError(getString(R.string.enterLastName));
+            isFormValid = false;
+        }
+
+        if (AppUtils.isInValidString(email)){
+            emailTIL.setError(getString(R.string.enterEmail));
+            isFormValid = false;
+        }
+
+        if (!AppUtils.isValidEmail(email)){
+            emailTIL.setError(getString(R.string.enterValidEmail));
+            isFormValid = false;
+        }
+
+        if (AppUtils.isInValidString(passwd)){
+            passwdTIL.setError(getString(R.string.enterPasswd));
+            isFormValid = false;
+        }
+
+        return isFormValid;
+    }
+
+    private void resetForm() {
+        firstNameTIL.setError("");
+        firstNameTIL.setErrorEnabled(false);
+        lastNameTIL.setError("");
+        lastNameTIL.setErrorEnabled(false);
+        emailTIL.setError("");
+        emailTIL.setErrorEnabled(false);
+        passwdTIL.setError("");
+        passwdTIL.setErrorEnabled(false);
+    }
 
     @Override
     public void onDestroy() {
