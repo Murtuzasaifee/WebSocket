@@ -17,6 +17,7 @@ import com.bitoasis.websocket.inits.BaseActivity;
 import com.bitoasis.websocket.inits.BaseFragment;
 import com.bitoasis.websocket.presentation.dashboard.DashboardActivity;
 import com.bitoasis.websocket.utils.AppUtils;
+import com.bitoasis.websocket.utils.SharedPrefUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -82,6 +83,7 @@ public class LoginFragment extends BaseFragment {
                     && user.getEmail().equalsIgnoreCase(email)
                     && user.getPassword().equals(passwd)) {
 
+                SharedPrefUtils.setLogin(activityWR.get(), true);
                 activityWR.get().finishAffinity();
                 Intent dashboardIntent = new Intent(activityWR.get(), DashboardActivity.class);
                 startActivity(dashboardIntent);

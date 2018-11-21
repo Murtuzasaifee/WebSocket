@@ -1,5 +1,6 @@
 package com.bitoasis.websocket.presentation.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,10 +17,12 @@ import android.widget.Toast;
 import com.bitoasis.websocket.R;
 import com.bitoasis.websocket.datamodels.TradeModel;
 import com.bitoasis.websocket.inits.BaseFragment;
+import com.bitoasis.websocket.inits.SplashActivity;
 import com.bitoasis.websocket.utils.ConnectionUtils;
 import com.bitoasis.websocket.inits.BaseActivity;
 import com.bitoasis.websocket.sockets.CustomWebSocketListener;
 import com.bitoasis.websocket.sockets.SocketDataListener;
+import com.bitoasis.websocket.utils.SharedPrefUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,6 +70,7 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
         updateScreenTitle(getString(R.string.tradeHighlight));
         inputTIL = findViewById(R.id.inputTIL);
         ((BottomNavigationView) findViewById(R.id.bottomBar)).setOnNavigationItemSelectedListener(navigationListener);
+        findViewById(R.id.logoutBtn).setOnClickListener(clickListener);
     }
 
     /**
@@ -117,6 +121,23 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
     }
 
     /**
+     * view click listener
+     * */
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.logoutBtn:
+                    SharedPrefUtils.setLogin(dashboardActivityWR.get(), false);
+                    Intent intent = new Intent(dashboardActivityWR.get(), SplashActivity.class);
+                    startActivity(intent);
+                    finish();
+                    break;
+            }
+        }
+    };
+
+    /**
      * Validate user input
      * before making connection
      */
@@ -141,6 +162,7 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
         }
         client = null;
         dashboardActivityWR = null;
+        clickListener = null;
     }
 
     @Override

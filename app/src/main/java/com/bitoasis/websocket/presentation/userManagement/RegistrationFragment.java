@@ -19,6 +19,7 @@ import com.bitoasis.websocket.inits.BaseActivity;
 import com.bitoasis.websocket.inits.BaseFragment;
 import com.bitoasis.websocket.presentation.dashboard.DashboardActivity;
 import com.bitoasis.websocket.utils.AppUtils;
+import com.bitoasis.websocket.utils.SharedPrefUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -92,6 +93,7 @@ public class RegistrationFragment extends BaseFragment {
 
             long id = DbHelper.getAppDatabase(activityWR.get()).userDao().insert(user);
             if (id > 0) {
+                SharedPrefUtils.setLogin(activityWR.get(), true);
                 activityWR.get().finishAffinity();
                 Intent dashboardIntent = new Intent(activityWR.get(), DashboardActivity.class);
                 startActivity(dashboardIntent);

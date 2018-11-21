@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.bitoasis.websocket.R;
+import com.bitoasis.websocket.presentation.dashboard.DashboardActivity;
 import com.bitoasis.websocket.presentation.userManagement.UserManagementActivity;
+import com.bitoasis.websocket.utils.SharedPrefUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -20,6 +22,18 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         splashActivityWR = new WeakReference<>(this);
         initFields();
+        checkLoginState();
+    }
+
+    /**
+     * Check Login State for redirection
+     * */
+    private void checkLoginState() {
+        if (SharedPrefUtils.isLoggedIn(splashActivityWR.get())){
+            Intent dashboardIntent = new Intent(splashActivityWR.get(), DashboardActivity.class);
+            startActivity(dashboardIntent);
+            finish();
+        }
     }
 
     /**
