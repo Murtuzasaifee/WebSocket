@@ -22,5 +22,6 @@ public class TradeModel {
     private String highestTradePrice;
     private String lowestTradePrice;
     private int isFrozen;
+    private boolean isGreater;
 
 }

@@ -33,6 +33,15 @@
                 android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
+            <ImageView
+                android:id="@+id/tradeIndicatorr"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                tools:src="@drawable/ic_up"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/currencyTV"/>
+
             <TextView
                 android:id="@+id/currencyTV"
                 android:layout_width="wrap_content"

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,8 +55,8 @@ public class TradeHighlightFragment extends BaseFragment {
         } else if (tradeModel.getCurrencyId() == 172) {
             ((TextView) eth.findViewById(R.id.currencyTV)).setText("ETH_ETC");
             updateView(eth, tradeModel);
-        } else if (tradeModel.getCurrencyId() == 137) {
-            ((TextView) xrp.findViewById(R.id.currencyTV)).setText("XMR_LTC");
+        } else if (tradeModel.getCurrencyId() == 171) {
+            ((TextView) xrp.findViewById(R.id.currencyTV)).setText("BTC_ETC");
             updateView(xrp, tradeModel);
         }
 
@@ -69,5 +70,10 @@ public class TradeHighlightFragment extends BaseFragment {
             ((TextView) v.findViewById(R.id.frozenTV)).setText("No");
         else
             ((TextView) v.findViewById(R.id.frozenTV)).setText("YES");
+
+        if (tradeModel.isGreater())
+            ((ImageView) v.findViewById(R.id.tradeIndicatorr)).setImageResource(R.drawable.ic_up);
+        else
+            ((ImageView) v.findViewById(R.id.tradeIndicatorr)).setImageResource(R.drawable.ic_down);
     }
 }

@@ -43,22 +43,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/inputNumber"
+            android:text="0"
             android:imeOptions="actionNext"
             android:inputType="number"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
-
-    <Button
-        android:id="@+id/fetchDetailsBtn"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/white_btn_rounded"
-        android:text="@string/getDetails"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold" />
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -9,6 +9,7 @@ import android.util.JsonReader;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,15 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
         TradeHighlightFragment tradeHighlightFragment = new TradeHighlightFragment();
         navigateToFragments(false, tradeHighlightFragment, TradeHighlightFragment.TAG);
         selectedFragment = tradeHighlightFragment;
+        initSocketConnection();
+    }
+
+    private void initSocketConnection() {
+        if (ConnectionUtils.isNetworkConnected(dashboardActivityWR.get())) {
+            if (validInput())
+                startSocketConnection();
+        } else
+            Toast.makeText(dashboardActivityWR.get(), getString(R.string.plzConnectToNetwork), Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -56,7 +66,6 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
     private void initFields() {
         updateScreenTitle(getString(R.string.tradeHighlight));
         inputTIL = findViewById(R.id.inputTIL);
-        findViewById(R.id.fetchDetailsBtn).setOnClickListener(clickListener);
         ((BottomNavigationView) findViewById(R.id.bottomBar)).setOnNavigationItemSelectedListener(navigationListener);
     }
 
@@ -71,23 +80,6 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
         client.dispatcher().executorService().shutdown();
     }
 
-    /**
-     * View Click listener
-     */
-    private View.OnClickListener clickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.fetchDetailsBtn:
-                    if (ConnectionUtils.isNetworkConnected(dashboardActivityWR.get())) {
-                        if (validInput())
-                            startSocketConnection();
-                    } else
-                        Toast.makeText(dashboardActivityWR.get(), getString(R.string.plzConnectToNetwork), Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        }
-    };
 
     /**
      * Bottom navigation bar click listener
@@ -148,7 +140,6 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
             wSocket = null;
         }
         client = null;
-        clickListener = null;
         dashboardActivityWR = null;
     }
 
@@ -184,9 +175,20 @@ public class DashboardActivity extends BaseActivity implements SocketDataListene
                 tradeModel.setHighestTradePrice(splitStr.get(10));
                 tradeModel.setLowestTradePrice(splitStr.get(11));
             }
+
+           tradeModel.setGreater(getTradeMovementIndicator(tradeModel.getLastTradePrice()));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return tradeModel;
+    }
+
+    private boolean getTradeMovementIndicator(String tradePrice) {
+        int input = Integer.parseInt(inputTIL.getEditText().getText().toString().trim());
+        if (input > Double.parseDouble(tradePrice))
+            return false;
+        else
+            return true;
     }
 }
