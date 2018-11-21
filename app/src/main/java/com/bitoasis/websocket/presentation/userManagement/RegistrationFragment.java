@@ -9,8 +9,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bitoasis.websocket.R;
+import com.bitoasis.websocket.dbhelper.AppDatabase;
+import com.bitoasis.websocket.dbhelper.DbHelper;
+import com.bitoasis.websocket.entity.User;
 import com.bitoasis.websocket.inits.BaseActivity;
 import com.bitoasis.websocket.inits.BaseFragment;
 import com.bitoasis.websocket.presentation.dashboard.DashboardActivity;
@@ -63,21 +67,59 @@ public class RegistrationFragment extends BaseFragment {
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.closeBtn:
                     closeFragment(activityWR.get());
                     break;
 
                 case R.id.registerBtn:
-                    if (isValidForm()){
-                        activityWR.get().finishAffinity();
-                        Intent dashboardIntent = new Intent(activityWR.get(), DashboardActivity.class);
-                        startActivity(dashboardIntent);
-                    }
+                    if (isValidForm())
+                        insertUserInDB();
+
                     break;
             }
         }
     };
+
+    private void insertUserInDB() {
+        try {
+            User user = getUserModel();
+
+            if (isUserExist(getUserModel().getEmail())) {
+                Toast.makeText(activityWR.get(), getString(R.string.userExist), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            long id = DbHelper.getAppDatabase(activityWR.get()).userDao().insert(user);
+            if (id > 0) {
+                activityWR.get().finishAffinity();
+                Intent dashboardIntent = new Intent(activityWR.get(), DashboardActivity.class);
+                startActivity(dashboardIntent);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private User getUserModel() {
+        User user = new User();
+        String firstName = firstNameTIL.getEditText().getText().toString().trim();
+        String lastName = lastNameTIL.getEditText().getText().toString().trim();
+        String email = emailTIL.getEditText().getText().toString().trim();
+        String passwd = passwdTIL.getEditText().getText().toString().trim();
+        user.setEmail(email);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setPassword(passwd);
+        return user;
+    }
+
+    private boolean isUserExist(String email) {
+        User user = DbHelper.getAppDatabase(activityWR.get()).userDao().getUserByEmail(email);
+        if (user != null) return true;
+        else return false;
+    }
 
     private boolean isValidForm() {
         boolean isFormValid = true;
@@ -88,27 +130,27 @@ public class RegistrationFragment extends BaseFragment {
         String email = emailTIL.getEditText().getText().toString().trim();
         String passwd = passwdTIL.getEditText().getText().toString().trim();
 
-        if (AppUtils.isInValidString(firstName)){
+        if (AppUtils.isInValidString(firstName)) {
             firstNameTIL.setError(getString(R.string.enterFirstName));
             isFormValid = false;
         }
 
-        if (AppUtils.isInValidString(lastName)){
+        if (AppUtils.isInValidString(lastName)) {
             lastNameTIL.setError(getString(R.string.enterLastName));
             isFormValid = false;
         }
 
-        if (AppUtils.isInValidString(email)){
+        if (AppUtils.isInValidString(email)) {
             emailTIL.setError(getString(R.string.enterEmail));
             isFormValid = false;
         }
 
-        if (!AppUtils.isValidEmail(email)){
+        if (!AppUtils.isValidEmail(email)) {
             emailTIL.setError(getString(R.string.enterValidEmail));
             isFormValid = false;
         }
 
-        if (AppUtils.isInValidString(passwd)){
+        if (AppUtils.isInValidString(passwd)) {
             passwdTIL.setError(getString(R.string.enterPasswd));
             isFormValid = false;
         }

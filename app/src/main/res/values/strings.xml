@@ -33,4 +33,6 @@
     <string name="enterPasswd">Enter Password</string>
     <string name="enterFirstName">Enter First Name</string>
     <string name="enterLastName">Enter Last Name</string>
+    <string name="userNotExist">Email/Password is incorrect.</string>
+    <string name="userExist">Email is already registered. Please user another email.</string>
 </resources>

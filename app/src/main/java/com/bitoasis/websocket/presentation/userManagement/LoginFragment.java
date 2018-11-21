@@ -8,8 +8,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bitoasis.websocket.R;
+import com.bitoasis.websocket.dbhelper.DbHelper;
+import com.bitoasis.websocket.entity.User;
 import com.bitoasis.websocket.inits.BaseActivity;
 import com.bitoasis.websocket.inits.BaseFragment;
 import com.bitoasis.websocket.presentation.dashboard.DashboardActivity;
@@ -62,15 +65,32 @@ public class LoginFragment extends BaseFragment {
                     break;
 
                 case R.id.loginBtn:
-                    if (isValidForm()){
-                        activityWR.get().finishAffinity();
-                        Intent dashboardIntent = new Intent(activityWR.get(), DashboardActivity.class);
-                        startActivity(dashboardIntent);
-                    }
+                    if (isValidForm())
+                        checkUserInDB();
                     break;
             }
         }
     };
+
+    private void checkUserInDB() {
+        try {
+            String email = emailTIL.getEditText().getText().toString().trim();
+            String passwd = passwdTIL.getEditText().getText().toString().trim();
+            User user = DbHelper.getAppDatabase(activityWR.get()).userDao().getUserByEmail(email);
+
+            if (user != null
+                    && user.getEmail().equalsIgnoreCase(email)
+                    && user.getPassword().equals(passwd)) {
+
+                activityWR.get().finishAffinity();
+                Intent dashboardIntent = new Intent(activityWR.get(), DashboardActivity.class);
+                startActivity(dashboardIntent);
+            } else
+                Toast.makeText(activityWR.get(), getString(R.string.userNotExist), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private boolean isValidForm() {
         boolean isFormValid = true;
@@ -79,17 +99,17 @@ public class LoginFragment extends BaseFragment {
         String email = emailTIL.getEditText().getText().toString().trim();
         String passwd = passwdTIL.getEditText().getText().toString().trim();
 
-        if (AppUtils.isInValidString(email)){
+        if (AppUtils.isInValidString(email)) {
             emailTIL.setError(getString(R.string.enterEmail));
             isFormValid = false;
         }
 
-        if (!AppUtils.isValidEmail(email)){
+        if (!AppUtils.isValidEmail(email)) {
             emailTIL.setError(getString(R.string.enterValidEmail));
             isFormValid = false;
         }
 
-        if (AppUtils.isInValidString(passwd)){
+        if (AppUtils.isInValidString(passwd)) {
             passwdTIL.setError(getString(R.string.enterPasswd));
             isFormValid = false;
         }
